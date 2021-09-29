@@ -1,6 +1,6 @@
 {
-  "name": "vue-lazy-hydration",
-  "version": "2.0.0-beta.4",
+  "name": "@nujek/vue-lazy-hydration",
+  "version": "2.0.0",
   "description": "Lazy Hydration of Server-Side Rendered Vue.js Components",
   "keywords": [
     "gridsome",
@@ -31,7 +31,8 @@
     "test:integration:build": "npm run build && npm run test:integration:compile && npm run test:integration:render",
     "test:integration:serve": "serve test/integration/dist",
     "test:integration": "concurrently 'npm:test:integration:serve' 'jest test/integration/integration.test.js' --kill-others",
-    "prepublishOnly": "yarn run lint && yarn run build"
+    "prepublishOnly": "yarn run lint && yarn run build",
+    "publish:ci": "bumpp patch --commit --push --tag && pnpm publish"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^4.0.0",
@@ -57,7 +58,8 @@
     "uglify-es": "^3.3.9",
     "vue": "^2.6.12",
     "vue-server-renderer": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "bumpp": "^7.1.1"
   },
   "main": "dist/LazyHydrate.js",
   "module": "dist/LazyHydrate.esm.js",
