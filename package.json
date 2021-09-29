@@ -1,7 +1,8 @@
 {
   "name": "@nujek/vue-lazy-hydration",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Lazy Hydration of Server-Side Rendered Vue.js Components",
+  "private": false,
   "keywords": [
     "gridsome",
     "hydration",
