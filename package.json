@@ -1,6 +1,6 @@
 {
   "name": "@nujek/vue-lazy-hydration",
-  "version": "2.0.4",
+  "version": "2.0.0",
   "description": "Lazy Hydration of Server-Side Rendered Vue.js Components",
   "private": false,
   "keywords": [
@@ -33,7 +33,7 @@
     "test:integration:serve": "serve test/integration/dist",
     "test:integration": "concurrently 'npm:test:integration:serve' 'jest test/integration/integration.test.js' --kill-others",
     "prepublishOnly": "yarn run lint && yarn run build",
-    "publish:ci": "bumpp patch --commit --push --tag && pnpm publish"
+    "publish:ci": "bumpp patch --commit --push --tag && yarn publish --access public"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^4.0.0",
