@@ -1,21 +1,30 @@
 import { makeHydrationObserver } from './hydration-observer';
 import { makeHydrationPromise } from './hydration-promise';
 import { makeNonce } from './nonce';
+import { isHydrationDisabled } from './disabled';
 
 export function makeHydrationBlocker(component, options) {
   return Object.assign({
     mixins: [{
       beforeCreate() {
         this.cleanupHandlers = [];
-        const { hydrate, hydrationPromise } = makeHydrationPromise();
-        this.Nonce = makeNonce({ component, hydrationPromise });
-        this.hydrate = hydrate;
-        this.hydrationPromise = hydrationPromise;
+
+        if (isHydrationDisabled()) {
+          this.Nonce = component;
+        } else {
+          const { hydrate, hydrationPromise } = makeHydrationPromise();
+          this.Nonce = makeNonce({ component, hydrationPromise });
+          this.hydrate = hydrate;
+          this.hydrationPromise = hydrationPromise;
+        }
       },
       beforeDestroy() {
         this.cleanup();
       },
       mounted() {
+        // hydration is disabled
+        if (!this.hydrate) return;
+
         if (this.$el.nodeType === Node.COMMENT_NODE) {
           // No SSR rendered content, hydrate immediately.
           this.hydrate();
@@ -83,7 +92,7 @@ export function makeHydrationBlocker(component, options) {
       },
       render(h) {
         return h(this.Nonce, {
-          attrs: this.$attrs,
+          attrs: Object.assign({}, this.$attrs),
           on: this.$listeners,
           scopedSlots: this.$scopedSlots,
         }, this.$slots.default);
